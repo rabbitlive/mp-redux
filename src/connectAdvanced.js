@@ -21,7 +21,7 @@ function connectAdvance(
     
     return function wrapWithConnect(WrappedComponent) {
 
-	// A... wtf with the display name, maybe the file path?
+	// Huuu... wtf with the display name, maybe the file path?
 	const wrappedComponentName = WrappedComponent.displayName
 	      || WrappedComponent.name
 	      || 'Component'
