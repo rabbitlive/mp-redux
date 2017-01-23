@@ -1,11 +1,19 @@
 {
-  "name": "wxapp-redux",
-  "version": "0.0.0-rc.0",
-  "main": "index.js",
-  "repository": "git@github.com:rabbitlive/wxapp-redux.git",
-  "author": "rabbit <yfhj1990@hotmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "react-redux": "^5.0.2"
-  }
+    "name": "wxapp-redux",
+    "version": "0.0.0-rc.0",
+    "main": "src/index.js",
+    "repository": "git@github.com:rabbitlive/wxapp-redux.git",
+    "author": "rabbit <yfhj1990@hotmail.com>",
+    "license": "MIT",
+    "scripts": {
+	"start": "bash scripts/start"
+    },
+    "devDependencies": {
+	"rabbitpack": "^0.0.2-rc.5"
+    },
+    "dependencies": {
+	"invariant": "^2.2.2",
+	"redux": "^3.6.0",
+	"react-redux": "^5.0.2"
+    }
 }
