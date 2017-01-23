@@ -8,12 +8,12 @@ function checkStoreShape({ subscribe, dispatch, getState }) {
 	isFunction(getState)
 }
 
-export default function Provide(store, context) {
+export default function Provide(store) {
     if(!checkStoreShape(store))
 	throw new TypeError('Bad store!')
     
     return options => {
 	options.store = store
-	return context(options)
+	return App(options)
     }
 }

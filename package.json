@@ -1,0 +1,12 @@
+{
+    "scripts": {
+        "start": "bash start"
+    },
+    "dependencies": {
+        "react-redux": "^5.0.2",
+        "redux": "^3.6.0"
+    },
+    "devDependencies": {
+        "rabbitpack": "0.0.2-rc.6"
+    }
+}

@@ -1,8 +1,9 @@
 import Provider from './Provider'
-import connectAdvanced from './connectAdvanced'
-import connect from 'redux/src/connect'
+//import connectAdvanced from './connectAdvanced'
+import connect from './connect'
 
+//export const Provider = Provide
 export {
     Provider,
-    connect: createConnect(connectAdvanced)
+    connect
 }

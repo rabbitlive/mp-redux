@@ -1,4 +1,7 @@
-function connectAdvance(
+import invariant from 'invariant'
+import Subscription from 'react-redux/src/utils/Subscription'
+
+export default function connectAdvance(
     selectorFactory,
     {
 	getDisplayName = name => `ConnectAdvanced(${name})`,
@@ -19,11 +22,11 @@ function connectAdvance(
     const version = 0
     
     
-    return function wrapWithConnect(WrappedComponent) {
+    return function wrapWithConnect(options = {}, wxpage) {
 
 	// A... wtf with the display name, maybe the file path?
-	const wrappedComponentName = WrappedComponent.displayName
-	      || WrappedComponent.name
+	const wrappedComponentName = options.displayName
+	      || options.name
 	      || 'Component'
 	
 	const displayName = getDisplayName(wrappedComponentName)
@@ -39,145 +42,62 @@ function connectAdvance(
 	    withRef,
 	    displayName,
 	    wrappedComponentName,
-	    WrappedComponent
+	    options
 	}
 
 
-	// no Component
-	//class Connect extends Component {
-	class Connect {
-	    constructor(props, context) {
-		// no super
-		//super(props, context)
-		
-		this.version = version
-		this.state = {}
-		this.renderCount = 0
-		this.store = this.props[storeKey] //|| this.context[storeKey]
-		this.parentSub = props[subscriptionKey] //|| context[subscriptionKey]
+	const store = getApp().store
+	const { dispatch, getState } = store
+	const sourceSelector = selectorFactory(dispatch, selectorFactoryOptions)
 
-		this.setWrappedInstance = this.setWrappedInstance.bind(this)
-
-		invariant(this.store,
-			  `Could not find "${storeKey}" in either the context or ` +
-			  `props of "${displayName}". ` +
-			  `Either wrap the root component in a <Provider>, ` +
-			  `or explicitly pass "${storeKey}" as a prop to "${displayName}".`
-			 )
-
-		// make sure `getState` is properly bound in order to avoid breaking
-		// custom store implementations that rely on the store's context
-		this.getState = this.store.getState.bind(this.store);
-
-		this.initSelector()
-		this.initSubscription()
-	    }
-
-	    // no context
-	    // getChildContext() {
-	    // 	return { [subscriptionKey]: this.subscription || this.parentSub }
-	    // }
-
-	    onLoad() {
-		this.subscription.trySubscribe()
-		this.selector.run(this.props)
-	    }
-
-	    onUnload() {
-		if (this.subscription) this.subscription.tryUnsubscribe()
-		this.subscription = null
-		this.store = null
-		this.parentSub = null
-		this.selector.run = () => {}
-	    }
-
-	    getWrappedInstance() {
-		invariant(withRef,
-			  `To access the wrapped instance, you need to specify ` +
-			  `{ withRef: true } in the options argument of the ${methodName}() call.`
-			 )
-		return this.wrappedInstance
-	    }
-
-	    setWrappedInstance(ref) {
-		this.wrappedInstance = ref
-	    }
-
-	    getData() {
-		return this.data
-	    }
-
-	    initSelector() {
-		const { dispatch } = this.store
-		const { getData } = this;
-		const sourceSelector = selectorFactory(dispatch, selectorFactoryOptions)
-
-		// wrap the selector in an object that tracks its results between runs
-		const selector = this.selector = {
-		    //shouldComponentUpdate: true,
-		    props: sourceSelector(getData(), this.props),
-		    run: function runComponentSelector(props) {
-			try {
-			    const nextProps = sourceSelector(gerData(), props)
-			    if (selector.error || nextProps !== selector.props) {
-				//selector.shouldComponentUpdate = true
-				selector.props = nextProps
-				selector.error = null
-			    }
-			} catch (error) {
-			    //selector.shouldComponentUpdate = true
-			    selector.error = error
-			}
+	const selector = {
+	    props: sourceSelector(store.getState()),
+	    run: function runComponentSelector(props) {
+		try {
+		    const nextProps = sourceSelector(getState(), props)
+		    if (selector.error || nextProps !== selector.props) {
+			selector.props = nextProps
+			selector.error = null
 		    }
+		} catch (error) {
+		    console.log(error)
+		    selector.error = error
 		}
 	    }
-
-	    initSubscription() {
-		if (shouldHandleStateChanges) {
-		    const subscription = this.subscription = new Subscription(this.store, this.parentSub)
-		    const dummyState = {}
-
-		    subscription.onStateChange = function onStateChange() {
-			this.selector.run(this.props)
-			
-			// if (!this.selector.shouldComponentUpdate) {
-			//     subscription.notifyNestedSubs()
-			// } else {
-			//     this.componentDidUpdate = function componentDidUpdate() {
-			// 	//this.componentDidUpdate = undefined
-			// 	subscription.notifyNestedSubs()
-			//     }
-
-			//     this.setState(dummyState)
-			// }
-
-			this.setData(dummyState)
-		    }.bind(this)
-		}
-	    }
-
-	    
-	    isSubscribed() {
-		return Boolean(this.subscription) && this.subscription.isSubscribed()
-	    }
-	    
-
-	    addExtraProps(props) {
-		if (!withRef && !renderCountProp) return props
-		// make a shallow copy so that fields added don't leak to the original selector.
-		// this is especially important for 'ref' since that's a reference back to the component
-		// instance. a singleton memoized selector would then be holding a reference to the
-		// instance, preventing the instance from being garbage collected, and that would be bad
-		const withExtras = { ...props }
-		if (withRef) withExtras.ref = this.setWrappedInstance
-		if (renderCountProp) withExtras[renderCountProp] = this.renderCount++
-		return withExtras
-	    }
-	    
 	}
 
+	const subscription = new Subscription(store)
+	const dummyState = {}
 
+	function changeState(props) {
+	    this.setData(props)
+	}
+
+	subscription.onStateChange = function onStateChange() {
+	    selector.run()
+	    changeState(selector.props)
+	}
+
+	const handles = {}
 	
-	return new Connect()
+	Object.keys(selector.props).forEach(key => {
+	    if(typeof selector.props[key] === 'function') {
+		handles[key] = selector.props[key]
+	    }
+	})
+
+
+	return Page(Object.assign({}, options, handles, {
+	    data: selector.props,
+	    onLoad() {
+		changeState = changeState.bind(this)
+		subscription.trySubscribe()
+		selector.run()
+		console.log(this)
+	    },
+	    onUnload() {
+		if (subscription) subscription.tryUnsubscribe()
+	    }
+	}))
     }
 }
