@@ -1,8 +1,5 @@
+import isFunction from 'lodash.isfunction'
 
-
-function isFunction(x) {
-    return typeof x === 'function'
-}
 
 function checkStoreShape({ subscribe, dispatch, getState }) {
     return isFunction(subscribe) &&

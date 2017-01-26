@@ -1,3 +1,4 @@
+import isFunction from 'lodash.isfunction'
 import invariant from 'invariant'
 import Subscription from 'react-redux/src/utils/Subscription'
 
@@ -57,7 +58,16 @@ export default function connectAdvance(
 	const store = getApp().store
 	const { dispatch, getState } = store
 	const sourceSelector = selectorFactory(dispatch, selectorFactoryOptions)
+	const subscription = new Subscription(store)
+
+
+	function setData(props) {
+	    this.setData(props)
+	}
+
+	
 	const selector = {
+	    error: null,
 	    props: sourceSelector(store.getState()),
 	    run: function runComponentSelector(props) {
 		try {
@@ -65,52 +75,53 @@ export default function connectAdvance(
 		    if (selector.error || nextProps !== selector.props) {
 			selector.props = nextProps
 			selector.error = null
+			setData(selector.props)
 		    }
 		} catch (error) {
-		    console.log(error)
+		    throw new Error(error)
 		    selector.error = error
 		}
 	    }
 	}
-	const subscription = new Subscription(store)
-	
-	
-	function setData(props) {
-	    this.setData(props)
-	}
+
 
 	subscription.onStateChange = function onStateChange() {
 	    selector.run()
-	    setData(selector.props)
 	}
 
-	const handles = {}
+
+	// Split props to `this.data` and function to `this`
+	let datas   = {}
+	let handles = {}
 	
 	Object.keys(selector.props).forEach(key => {
-	    if(typeof selector.props[key] === 'function') {
-		handles[key] = selector.props[key]
-	    }
+	    
+	    let val = selector.props[key]
+	    let sel = !isFunction(val) ? datas : handles
+	    
+	    sel[key] = val
 	})
+
 
 
 	const { data, onLoad, onUnload } = options
 
-	let mergeData = data ? Object.assign({}, data, selector.props) : selector.props
+	let mergedData = data ? Object.assign({}, data, datas) : datas
 
 	return Page(Object.assign({}, options, handles, {
-	    data: mergeData,
+	    data: mergedData,
 	    onLoad() {
 		setData = setData.bind(this)
 		subscription.trySubscribe()
 		selector.run()
 
-		if(onLoad && typeof onLoad === 'function') {
+		if(isFunction(onLoad)) {
 		    onLoad.call(this)
 		}
 	    },
 	    onUnload() {
 		if (subscription) subscription.tryUnsubscribe()
-		if(onUnload && typeof onUnload === 'function') {
+		if(isFunction(onUnload)) {
 		    onUnload.call(this)
 		}
 	    }

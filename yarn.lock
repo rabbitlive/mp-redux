@@ -1921,7 +1921,7 @@ interpret@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.1.tgz#d579fb7f693b858004947af39fa0db49f795602c"
 
-invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.2:
+invariant@^2.0.0, invariant@^2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:
@@ -2212,6 +2212,10 @@ lodash.camelcase@^4.3.0:
 lodash.indexof@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/lodash.indexof/-/lodash.indexof-4.0.5.tgz#53714adc2cddd6ed87638f893aa9b6c24e31ef3c"
+
+lodash.isfunction@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.isfunction/-/lodash.isfunction-3.0.8.tgz#4db709fc81bc4a8fd7127a458a5346c5cdce2c6b"
 
 lodash.memoize@^4.1.0:
   version "4.1.2"
@@ -2993,9 +2997,9 @@ querystringify@0.0.x:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-0.0.4.tgz#0cf7f84f9463ff0ae51c4c4b142d95be37724d9c"
 
-rabbitpack@^0.0.2-rc.5:
-  version "0.0.2-rc.5"
-  resolved "https://registry.yarnpkg.com/rabbitpack/-/rabbitpack-0.0.2-rc.5.tgz#094408801e5c68a2513883c987304f54456551b5"
+rabbitpack@^0.0.2-rc.7:
+  version "0.0.2-rc.7"
+  resolved "https://registry.yarnpkg.com/rabbitpack/-/rabbitpack-0.0.2-rc.7.tgz#144935ead202e9d8ce789e9a5db1f9053b3f02ea"
   dependencies:
     babel-core "^6.21.0"
     babel-loader "^6.2.10"
