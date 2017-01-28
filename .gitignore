@@ -39,4 +39,4 @@ jspm_packages
 
 # scripts
 scripts
-dist
+dist/*.map
