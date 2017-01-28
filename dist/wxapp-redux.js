@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("lodash.isfunction"), require("redux"));
+		module.exports = factory(require("redux"));
 	else if(typeof define === 'function' && define.amd)
-		define(["lodash.isfunction", "redux"], factory);
+		define(["redux"], factory);
 	else if(typeof exports === 'object')
-		exports["wxapp-redux"] = factory(require("lodash.isfunction"), require("redux"));
+		exports["wxapp-redux"] = factory(require("redux"));
 	else
-		root["wxapp-redux"] = factory(root["lodash.isfunction"], root["redux"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_27__) {
+		root["wxapp-redux"] = factory(root["redux"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_27__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -270,6 +270,91 @@ process.umask = function () {
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * lodash 3.0.8 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright 2012-2016 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2016 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+
+/** `Object#toString` result references. */
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8 which returns 'object' for typed array constructors, and
+  // PhantomJS 1.9 which returns 'function' for `NodeList` instances.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+ * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
+  return !!value && (type == 'object' || type == 'function');
+}
+
+module.exports = isFunction;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var root = __webpack_require__(15);
 
 /** Built-in value references. */
@@ -278,7 +363,7 @@ var _Symbol = root.Symbol;
 module.exports = _Symbol;
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -291,7 +376,7 @@ exports.wrapMapToPropsConstant = wrapMapToPropsConstant;
 exports.getDependsOnOwnProps = getDependsOnOwnProps;
 exports.wrapMapToPropsFunc = wrapMapToPropsFunc;
 
-var _verifyPlainObject = __webpack_require__(3);
+var _verifyPlainObject = __webpack_require__(4);
 
 var _verifyPlainObject2 = _interopRequireDefault(_verifyPlainObject);
 
@@ -363,7 +448,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -378,7 +463,7 @@ var _isPlainObject = __webpack_require__(17);
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
-var _warning = __webpack_require__(4);
+var _warning = __webpack_require__(5);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -391,7 +476,7 @@ function verifyPlainObject(value, displayName, methodName) {
 }
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -424,12 +509,6 @@ function warning(message) {
 }
 
 /***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
-
-/***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -441,9 +520,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = Provide;
 
-var _lodash = __webpack_require__(5);
+var _index = __webpack_require__(1);
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -452,7 +531,7 @@ function checkStoreShape(_ref) {
        dispatch = _ref.dispatch,
        getState = _ref.getState;
 
-   return (0, _lodash2.default)(subscribe) && (0, _lodash2.default)(dispatch) && (0, _lodash2.default)(getState);
+   return (0, _index2.default)(subscribe) && (0, _index2.default)(dispatch) && (0, _index2.default)(getState);
 }
 
 function Provide(store) {
@@ -630,8 +709,10 @@ exports.default = createConnect();
  * will remain to ensure logic does not differ in production.
  */
 
+var NODE_ENV = process.env.NODE_ENV;
+
 var invariant = function invariant(condition, format, a, b, c, d, e, f) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (NODE_ENV !== 'production') {
     if (format === undefined) {
       throw new Error('invariant requires an error message argument');
     }
@@ -665,7 +746,7 @@ module.exports = invariant;
 "use strict";
 
 
-var _Symbol = __webpack_require__(1),
+var _Symbol = __webpack_require__(2),
     getRawTag = __webpack_require__(12),
     objectToString = __webpack_require__(13);
 
@@ -728,7 +809,7 @@ module.exports = getPrototype;
 "use strict";
 
 
-var _Symbol = __webpack_require__(1);
+var _Symbol = __webpack_require__(2);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -974,7 +1055,7 @@ exports.whenMapDispatchToPropsIsObject = whenMapDispatchToPropsIsObject;
 
 var _redux = __webpack_require__(27);
 
-var _wrapMapToProps = __webpack_require__(2);
+var _wrapMapToProps = __webpack_require__(3);
 
 function whenMapDispatchToPropsIsFunction(mapDispatchToProps) {
   return typeof mapDispatchToProps === 'function' ? (0, _wrapMapToProps.wrapMapToPropsFunc)(mapDispatchToProps, 'mapDispatchToProps') : undefined;
@@ -1007,7 +1088,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.whenMapStateToPropsIsFunction = whenMapStateToPropsIsFunction;
 exports.whenMapStateToPropsIsMissing = whenMapStateToPropsIsMissing;
 
-var _wrapMapToProps = __webpack_require__(2);
+var _wrapMapToProps = __webpack_require__(3);
 
 function whenMapStateToPropsIsFunction(mapStateToProps) {
   return typeof mapStateToProps === 'function' ? (0, _wrapMapToProps.wrapMapToPropsFunc)(mapStateToProps, 'mapStateToProps') : undefined;
@@ -1039,7 +1120,7 @@ exports.wrapMergePropsFunc = wrapMergePropsFunc;
 exports.whenMergePropsIsFunction = whenMergePropsIsFunction;
 exports.whenMergePropsIsOmitted = whenMergePropsIsOmitted;
 
-var _verifyPlainObject = __webpack_require__(3);
+var _verifyPlainObject = __webpack_require__(4);
 
 var _verifyPlainObject2 = _interopRequireDefault(_verifyPlainObject);
 
@@ -1222,7 +1303,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = verifySubselectors;
 
-var _warning = __webpack_require__(4);
+var _warning = __webpack_require__(5);
 
 var _warning2 = _interopRequireDefault(_warning);
 
@@ -1430,9 +1511,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 exports.default = connectAdvance;
 
-var _lodash = __webpack_require__(5);
+var _index = __webpack_require__(1);
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _index2 = _interopRequireDefault(_index);
 
 var _invariant = __webpack_require__(8);
 
@@ -1528,7 +1609,7 @@ function connectAdvance(selectorFactory) {
 		Object.keys(selector.props).forEach(function (key) {
 
 			var val = selector.props[key];
-			var sel = !(0, _lodash2.default)(val) ? datas : handles;
+			var sel = !(0, _index2.default)(val) ? datas : handles;
 
 			sel[key] = val;
 		});
@@ -1547,13 +1628,13 @@ function connectAdvance(selectorFactory) {
 				subscription.trySubscribe();
 				selector.run();
 
-				if ((0, _lodash2.default)(_onLoad)) {
+				if ((0, _index2.default)(_onLoad)) {
 					_onLoad.call(this);
 				}
 			},
 			onUnload: function onUnload() {
 				if (subscription) subscription.tryUnsubscribe();
-				if ((0, _lodash2.default)(_onUnload)) {
+				if ((0, _index2.default)(_onUnload)) {
 					_onUnload.call(this);
 				}
 			}

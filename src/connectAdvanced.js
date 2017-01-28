@@ -1,5 +1,5 @@
-import isFunction from 'lodash.isfunction'
-import invariant from 'invariant'
+import isFunction from 'lodash.isfunction/index'
+import invariant from 'invariant/invariant'
 import Subscription from 'react-redux/src/utils/Subscription'
 
 export default function connectAdvance(
