@@ -7,7 +7,7 @@ wxapp-redux require **React-Redux** 5.x or later.
 
 #+BEGIN_SRC shell
 yarn add wxapp-redux
-#+END
+#+END_SRC
 
 Then, you can use `webpack` or `Browserify` build source.
 
@@ -20,7 +20,7 @@ make redux store with wxapp you can use `Provider(store, options)`, e.g
 Provider(store)({
   foo: 42		
 })
-#+END
+#+END_SRC
 
 
 Provider set `options.store` with redux store, then pass the options to global `App`.
@@ -31,7 +31,7 @@ Connect a `wxapp Page` with store, should use `connect([mapStateToProps], [mapDi
 connect(mapStateToProps, mapDispatchToProps)({
   foo: 42
 })
-#+END
+#+END_SRC
 
 TODO
 
