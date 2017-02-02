@@ -33,7 +33,7 @@ export default function connectAdvance(
 ) {
     const subscriptionKey = storeKey + 'Subscription'
     
-    return function wrapWithConnect(options = {}, wxpage) {
+    return function wrapWithConnect(options = {}, style = {}) {
 
 	// A... wtf with the display name, maybe the file path?
 	const wrappedComponentName = options.displayName
@@ -104,9 +104,12 @@ export default function connectAdvance(
 
 
 
-	const { data, onLoad, onUnload } = options
+	const { data = {}, onLoad, onUnload } = options
 
-	let mergedData = data ? Object.assign({}, data, datas) : datas
+	let mergedData = Object.assign({}, data, datas, {
+	    // merge `Style Object` from css modules
+	    style: style
+	})
 
 	return Page(Object.assign({}, options, handles, {
 	    data: mergedData,
