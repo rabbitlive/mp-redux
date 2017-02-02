@@ -516,7 +516,7 @@ function warning(message) {
 
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+			value: true
 });
 exports.default = Provide;
 
@@ -527,20 +527,22 @@ var _index2 = _interopRequireDefault(_index);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function checkStoreShape(_ref) {
-   var subscribe = _ref.subscribe,
-       dispatch = _ref.dispatch,
-       getState = _ref.getState;
+			var subscribe = _ref.subscribe,
+			    dispatch = _ref.dispatch,
+			    getState = _ref.getState;
 
-   return (0, _index2.default)(subscribe) && (0, _index2.default)(dispatch) && (0, _index2.default)(getState);
+			return (0, _index2.default)(subscribe) && (0, _index2.default)(dispatch) && (0, _index2.default)(getState);
 }
 
-function Provide(store) {
-   if (!checkStoreShape(store)) throw new TypeError('Bad store!');
+function Provide(store, options) {
+			if (!checkStoreShape(store)) throw new TypeError('Bad store!');
 
-   return function (options) {
-      options.store = store;
-      return App(options);
-   };
+			return function (wxAppOptions) {
+						if (wxAppOptions.store) throw new Error('The `store` key already exist.');
+
+						wxAppOptions.store = store;
+						return App(wxAppOptions);
+			};
 }
 
 /***/ },
@@ -1549,7 +1551,7 @@ function connectAdvance(selectorFactory) {
 
 	return function wrapWithConnect() {
 		var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-		var wxpage = arguments[1];
+		var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 
 		// A... wtf with the display name, maybe the file path?
@@ -1614,12 +1616,16 @@ function connectAdvance(selectorFactory) {
 			sel[key] = val;
 		});
 
-		var data = options.data,
+		var _options$data = options.data,
+		    data = _options$data === undefined ? {} : _options$data,
 		    _onLoad = options.onLoad,
 		    _onUnload = options.onUnload;
 
 
-		var mergedData = data ? Object.assign({}, data, datas) : datas;
+		var mergedData = Object.assign({}, data, datas, {
+			// merge `Style Object` from css modules
+			style: style
+		});
 
 		return Page(Object.assign({}, options, handles, {
 			data: mergedData,
