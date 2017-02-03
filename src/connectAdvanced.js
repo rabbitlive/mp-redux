@@ -33,8 +33,8 @@ export default function connectAdvance(
 ) {
     const subscriptionKey = storeKey + 'Subscription'
     
-    return function wrapWithConnect(options = {}, style = {}) {
-
+    return function wrapWithConnect(options = {}, style = undefined, ...args) {
+	
 	// A... wtf with the display name, maybe the file path?
 	const wrappedComponentName = options.displayName
 	      || options.name
@@ -60,7 +60,7 @@ export default function connectAdvance(
 	const sourceSelector = selectorFactory(dispatch, selectorFactoryOptions)
 	const subscription = new Subscription(store)
 
-
+	
 	function setData(props) {
 	    this.setData(props)
 	}
@@ -90,12 +90,11 @@ export default function connectAdvance(
 	}
 
 
-	// Split props to `this.data` and function to `this`
+	// Split props to `this.data`, make handles to `this`
 	let datas   = {}
 	let handles = {}
 	
 	Object.keys(selector.props).forEach(key => {
-	    
 	    let val = selector.props[key]
 	    let sel = !isFunction(val) ? datas : handles
 	    
@@ -103,31 +102,45 @@ export default function connectAdvance(
 	})
 
 
+	// If options is a function, call fn with selector and subscription
+	// if(isFunction(options)) return options.call(this, selector.props, function subscribe() {
+	//     subscription.trySubscribe()
+	//     selector.run()
+	// })
 
-	const { data = {}, onLoad, onUnload } = options
+	const { data = {}, onLoad, onUnload, onReady } = options
 
-	let mergedData = Object.assign({}, data, datas, {
-	    // merge `Style Object` from css modules
-	    style: style
-	})
+	const mergedData = Object.assign({},
+					 // data of options
+					 data,
+					 // redux store
+					 datas,
+					 // merge `Style Object` to `this.data` from css modules
+					 style || {})
 
-	return Page(Object.assign({}, options, handles, {
+
+	const out = Object.assign({}, options, handles, {
 	    data: mergedData,
 	    onLoad() {
 		setData = setData.bind(this)
 		subscription.trySubscribe()
+		if(isFunction(onLoad)) onLoad.call(this)
+	    },
+	    onReady() {
 		selector.run()
-
-		if(isFunction(onLoad)) {
-		    onLoad.call(this)
-		}
+		if(isFunction(onReady)) onReady.call(this)
 	    },
 	    onUnload() {
-		if (subscription) subscription.tryUnsubscribe()
-		if(isFunction(onUnload)) {
-		    onUnload.call(this)
-		}
+		if(subscription) subscription.tryUnsubscribe()
+		if(isFunction(onUnload)) onUnload.call(this)
 	    }
-	}))
+	})
+
+
+	const notExportByWXPage = args.length ? Boolean(args[args.length - 1]) : false
+	
+	if(notExportByWXPage) return out
+
+	return Page(out)
     }
 }
