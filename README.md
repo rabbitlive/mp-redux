@@ -1,26 +1,28 @@
-* wxapp-redux
+<img src="assets/wechat.png" width="60" />
+<img src="assets/redux.png" width="60" />
 
 
-** Installation
+
+## Installation
 
 wxapp-redux require **React-Redux** 5.x or later.
 
-#+BEGIN_SRC shell
-yarn add wxapp-redux
-#+END_SRC
+
+	yarn add wxapp-redux
+
 
 Then, you can use `webpack` or `Browserify` build source.
 
 
-** Usage
+## Usage
 
-make redux store with wxapp you can use `Provider(store, options)`, e.g
+make redux store with wxapp you can use `Provider(store)`, e.g
 
-#+BEGIN_SRC javascript
-Provider(store)({
-  foo: 42		
-})
-#+END_SRC
+
+	Provider(store)({
+	  foo: 42		
+	})
+
 
 
 Provider set `options.store` with redux store, then pass the options to global `App`.
