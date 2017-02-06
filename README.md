@@ -74,7 +74,7 @@ connect(mapStateToProps, mapDispatchToProps)()
 
 同样，connect 也内置了 `Page`，不需要这个，可以给 connect 传递一个 `false` 来直接导出 `pageOptions`。
 
-如果希望使用 CSS Modules，可以将 style 传递给 connect。这样 style 会被绑定到 `pageOption.data`。
+如果希望使用 [CSS Modules](https://github.com/css-modules/css-modules)，可以将 `style` 传递给 connect。这样 `style` 会被绑定到 `pageOption.data.style`。
 
 下面是一个计数器 connect 的简单使用：
 
@@ -175,4 +175,6 @@ connect(mapStateToProps, mapDispatchToProps)({}, style)
 ```
 
 
-### TODO 项目构建
+### TODO BuildTools
+
+### TODO DevTools
