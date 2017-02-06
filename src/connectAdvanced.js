@@ -101,14 +101,13 @@ export default function connectAdvance(
 	    sel[key] = val
 	})
 
-
 	// If options is a function, call fn with selector and subscription
 	// if(isFunction(options)) return options.call(this, selector.props, function subscribe() {
 	//     subscription.trySubscribe()
 	//     selector.run()
 	// })
 
-	const { data = {}, onLoad, onUnload, onReady } = options
+	const { data = {}, onLoad, onUnload } = options
 
 	const mergedData = Object.assign({},
 					 // data of options
@@ -124,15 +123,12 @@ export default function connectAdvance(
 	    onLoad() {
 		setData = setData.bind(this)
 		subscription.trySubscribe()
-		if(isFunction(onLoad)) onLoad.call(this)
-	    },
-	    onReady() {
 		selector.run()
-		if(isFunction(onReady)) onReady.call(this)
+		if(isFunction(onLoad)) onLoad.apply(this, arguments)
 	    },
 	    onUnload() {
 		if(subscription) subscription.tryUnsubscribe()
-		if(isFunction(onUnload)) onUnload.call(this)
+		if(isFunction(onUnload)) onUnload.apply(this, arguments)
 	    }
 	})
 
