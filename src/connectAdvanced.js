@@ -109,13 +109,15 @@ export default function connectAdvance(
 
 	const { data = {}, onLoad, onUnload } = options
 
-	const mergedData = Object.assign({},
-					 // data of options
-					 data,
-					 // redux store
-					 datas,
-					 // merge `Style Object` to `this.data` from css modules
-					 style || {})
+	const mergedData = Object.assign(
+	    {},
+	    // data of options
+	    data,
+	    // redux store
+	    datas,
+	    // merge `Style Object` to `this.data` from css modules
+	    style ? { style: style } : {}
+	)
 
 
 	const out = Object.assign({}, options, handles, {

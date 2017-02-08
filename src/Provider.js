@@ -10,7 +10,7 @@ export default function Provide(store) {
     if(!checkStoreShape(store))
 	throw new TypeError('Bad store!')
     
-    return function(options, ...args) {
+    return function(options = {}, ...args) {
 	const { storeKey } = options
 	
 	if(options.store && !storeKey)
