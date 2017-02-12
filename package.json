@@ -6,19 +6,22 @@
     "author": "rabbit <yfhj1990@hotmail.com>",
     "license": "MIT",
     "files": [
-	"dist",
-	"src",
-	"assets"
+	    "dist",
+	    "src"
     ],
     "scripts": {
-	"build": "bash scripts/start"
+	    "build": "cross-env node node_modules/webpack/bin/webpack.js --config node_modules/rabbitpack/src/LibraryBuilder.js",
+	    "test": "cross-env node node_modules/jest/bin/jest.js --verbose"
     },
     "devDependencies": {
-	"rabbitpack": "^0.0.2-rc.18"
+	    "rabbitpack": "^0.0.2-rc.20"
     },
     "dependencies": {
-	"lodash.isfunction": "^3.0.8",
-	"react-redux": "^5.0.2",
-	"redux": "^3.6.0"
+	    "lodash.isfunction": "^3.0.8",
+	    "react-redux": "^5.0.2",
+	    "redux": "^3.6.0"
+    },
+    "jest": {
+	    "transformIgnorePatterns": []
     }
 }

@@ -1,6 +1,7 @@
 import isFunction from 'lodash.isfunction/index'
 import invariant from 'invariant/invariant'
 import Subscription from 'react-redux/src/utils/Subscription'
+import checkEnvironment from './checkEnvironment'
 
 export default function connectAdvance(
     selectorFactory,
@@ -33,9 +34,10 @@ export default function connectAdvance(
 ) {
     const subscriptionKey = storeKey + 'Subscription'
     
-    return function wrapWithConnect(options = {}, style = undefined, ...args) {
+    return function wrapWithConnect(options = {}, style = undefined) {
+
+	if(options === null) options = {}
 	
-	// A... wtf with the display name, maybe the file path?
 	const wrappedComponentName = options.displayName
 	      || options.name
 	      || 'Component'
@@ -55,7 +57,7 @@ export default function connectAdvance(
 	    options
 	}
 
-	const store = getApp().store
+	const { store, __WXAPPREDUXEXPORT__ } = getApp()
 	const { dispatch, getState } = store
 	const sourceSelector = selectorFactory(dispatch, selectorFactoryOptions)
 	const subscription = new Subscription(store)
@@ -120,7 +122,7 @@ export default function connectAdvance(
 	)
 
 
-	const out = Object.assign({}, options, handles, {
+	const pageOptions = Object.assign({}, options, handles, {
 	    data: mergedData,
 	    onLoad() {
 		setData = setData.bind(this)
@@ -133,12 +135,9 @@ export default function connectAdvance(
 		if(isFunction(onUnload)) onUnload.apply(this, arguments)
 	    }
 	})
-
-
-	const notExportByWXPage = args.length ? Boolean(args[args.length - 1]) : false
 	
-	if(notExportByWXPage) return out
+	if(__WXAPPREDUXEXPORT__) return pageOptions
 
-	return Page(out)
+	return Page(pageOptions)
     }
 }

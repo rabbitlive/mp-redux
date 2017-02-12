@@ -1,13 +1,14 @@
 <div align="center">
-	<img title="wechat" src="https://cdn.worldvectorlogo.com/logos/wechat.svg" width="100" />
-	<img title="redux" src="https://cdn.worldvectorlogo.com/logos/redux.svg" width="100" />
+	<img title="wechat" src="https://cdn.worldvectorlogo.com/logos/wechat.svg" width="100" hspace="20" />
+	<img title="redux" src="https://cdn.worldvectorlogo.com/logos/redux.svg" width="100" hspace="20" />
+	<h1>wxapp-redux</h1>
 </div>
 
 
 
 <h2 align="center">Installation</h2>
 
-wxapp-redux 需要依赖 **[Redux](https://github.com/reactjs/redux)**.
+wxapp-redux 依赖于 **[Redux](https://github.com/reactjs/redux)**.
 
 
 	yarn add wxapp-redux
@@ -20,7 +21,7 @@ wxapp-redux 需要依赖 **[Redux](https://github.com/reactjs/redux)**.
 
 <h2 align="center">Usage</h2>
 
-#### Provider(store: Store)([appOptions: Object], [notExportApp: Boolean = false])
+#### Provider(store: Store)([appOptions: Object])
 
 首先，需要注入`store`到全局的`App`，可以使用`Provider`：
 
@@ -41,18 +42,19 @@ Provider(store)({
 })
 ```
 
-Provider将多余的属性传递给App，并在其中已经内置了App。如果不想内置，可以传入一个false：
+Provider将多余的属性传递给App，并在其中已经内置了App。如果不想内置App和Page，可以将 `__WXAPPREDUXEXPORT__` 设置为 `true`：
 
 ```js
 const options = Provider(store)({
-  foo: 42
-}, false)
+  foo: 42,
+  __WXAPPREDUXEXPORT__: true
+})
 
 App(options)
 ```
 
 
-#### connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])([pageOptions: Object = {}], [style: Object = undefined], [notExportByPage: Boolean = false])
+#### connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])([pageOptions: Object = {}], [style: Object = undefined])
 
 在`Page`中，使用`connect`可以将**redux store**绑定到view上：
 
@@ -72,7 +74,7 @@ connect(mapStateToProps, mapDispatchToProps)()
 
 `pageOptions` 的其他属性会原样传递给 `Page(pageOptions)`
 
-同样，connect 也内置了 `Page`，不需要这个，可以给 connect 传递一个 `false` 来直接导出 `pageOptions`。
+同样，connect 也内置了 `Page`。
 
 如果希望使用 [CSS Modules](https://github.com/css-modules/css-modules)，可以将 `style` 传递给 connect。这样 `style` 会被绑定到 `pageOption.data.style`。
 
