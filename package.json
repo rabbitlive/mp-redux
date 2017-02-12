@@ -14,7 +14,7 @@
 	"build": "bash scripts/start"
     },
     "devDependencies": {
-	"rabbitpack": "^0.0.2-rc.10"
+	"rabbitpack": "^0.0.2-rc.18"
     },
     "dependencies": {
 	"lodash.isfunction": "^3.0.8",

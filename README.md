@@ -1,10 +1,11 @@
 <div align="center">
-	<img src="assets/wechat.png" width="60" />
-	<img src="assets/redux.png" width="60" />
+	<img title="wechat" src="https://cdn.worldvectorlogo.com/logos/wechat.svg" width="100" />
+	<img title="redux" src="https://cdn.worldvectorlogo.com/logos/redux.svg" width="100" />
 </div>
 
 
-### Installation
+
+<h2 align="center">Installation</h2>
 
 wxapp-redux 需要依赖 **[Redux](https://github.com/reactjs/redux)**.
 
@@ -17,8 +18,7 @@ wxapp-redux 需要依赖 **[Redux](https://github.com/reactjs/redux)**.
 
 
 
-### Usage
-
+<h2 align="center">Usage</h2>
 
 #### Provider(store: Store)([appOptions: Object], [notExportApp: Boolean = false])
 
@@ -178,3 +178,29 @@ connect(mapStateToProps, mapDispatchToProps)({}, style)
 ### TODO BuildTools
 
 ### TODO DevTools
+
+
+
+<h2 align="center">LICENSE</h2>
+
+> MIT License (MIT)
+
+> Copyright (c) PostHTML Ivan Voischev <voischev.ivan@ya.ru>
+
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+> The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
