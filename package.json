@@ -1,6 +1,11 @@
 {
     "name": "wxapp-redux",
-    "version": "1.0.1",
+    "version": "1.0.2",
+    "description": "Wechat App with Redux.",
+    "keywords": [
+        "wxapp",
+        "redux"
+    ],
     "main": "src/index.js",
     "repository": "git@github.com:rabbitlive/wxapp-redux.git",
     "author": "rabbit <yfhj1990@hotmail.com>",

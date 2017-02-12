@@ -10,12 +10,12 @@
 
 wxapp-redux 依赖于 **[Redux](https://github.com/reactjs/redux)**.
 
-
-	yarn add wxapp-redux
+```sh
+yarn add wxapp-redux
+````
 
 
 然后, 复制 `dist/wxapp-redux.js` 或 `dist/wxapp-redux.min.js` 到微信小程序项目中，比如`/lib`。当然，不要忘记导入`redux.js`。
-
 
 
 
@@ -187,7 +187,7 @@ connect(mapStateToProps, mapDispatchToProps)({}, style)
 
 > MIT License (MIT)
 
-> Copyright (c) PostHTML Ivan Voischev <voischev.ivan@ya.ru>
+> Copyright (c) Rabbit
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
